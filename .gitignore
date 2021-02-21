@@ -3,3 +3,9 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+# ignore appsettings configuration files
+/appsettings.development.json
+
+# ignore credentials files
+/google-spreadsheet-credentials.json
