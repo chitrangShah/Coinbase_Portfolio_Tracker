@@ -6,12 +6,12 @@ namespace Coinbase_Portfolio_Tracker.Api.Config
         public Google GoogleSpreadsheet { get; set; }
     }
 
-    public abstract class Coinbase
+    public class Coinbase
     {
         public string ApiKey { get; set; }
     }
 
-    public abstract class Google
+    public class Google
     {
         public string Type { get; set; }
         public string ProjectId { get; set; }

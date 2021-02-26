@@ -12,10 +12,11 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Api\Services" />
+      <Folder Include="Api\Services\Google" />
     </ItemGroup>
 
 </Project>
