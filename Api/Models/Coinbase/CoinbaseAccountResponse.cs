@@ -4,13 +4,13 @@ using System.Text.Json.Serialization;
 
 namespace Coinbase_Portfolio_Tracker.Api.Models.Coinbase
 {
-    public class AccountResponse
+    public class CoinbaseAccountResponse
     {
         [JsonPropertyName("data")]
-        public List<Account> Accounts { get; set; }
+        public List<CoinbaseAccountResponseDetails> Accounts { get; set; }
     }
 
-    public class Account
+    public class CoinbaseAccountResponseDetails
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -28,7 +28,7 @@ namespace Coinbase_Portfolio_Tracker.Api.Models.Coinbase
         public string Currency { get; set; }
 
         [JsonPropertyName("balance")] 
-        public PriceResponse Balance { get; set; }
+        public CoinbasePriceResponseDetails Balance { get; set; }
         
         [JsonPropertyName("created_at")]
         public DateTime Created_At { get; set; }
