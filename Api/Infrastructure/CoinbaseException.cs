@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using Coinbase_Portfolio_Tracker.Api.Config;
 
 namespace Coinbase_Portfolio_Tracker.Api.Infrastructure
 {
