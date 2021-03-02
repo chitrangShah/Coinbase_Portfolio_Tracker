@@ -16,14 +16,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Api\Config" />
-      <Folder Include="Api\Services\Google" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Remove="Api\Config\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Api\Config\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Api\Config\**" />
     </ItemGroup>
 
 </Project>

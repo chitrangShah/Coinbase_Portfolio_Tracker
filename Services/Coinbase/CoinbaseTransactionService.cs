@@ -1,4 +1,4 @@
-namespace Coinbase_Portfolio_Tracker.Api.Services.Coinbase
+namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ITransactionService
     {

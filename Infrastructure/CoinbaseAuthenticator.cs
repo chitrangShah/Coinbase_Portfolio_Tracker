@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Coinbase_Portfolio_Tracker.Api.Infrastructure
+namespace Coinbase_Portfolio_Tracker.Infrastructure
 {
     public class CoinbaseAuthenticator : ICoinbaseAuthenticator
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace Coinbase_Portfolio_Tracker.Api.Infrastructure
+namespace Coinbase_Portfolio_Tracker.Infrastructure
 {
     public class CoinbaseException : Exception
     {

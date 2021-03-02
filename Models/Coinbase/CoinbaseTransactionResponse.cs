@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Coinbase_Portfolio_Tracker.Api.Models.Coinbase
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbaseTransactionResponse
     {

@@ -1,15 +1,15 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Coinbase_Portfolio_Tracker.Api.Models.Coinbase
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
-    public class CoinbaseSellResponse
+    public class CoinbaseBuyResponse
     {
         [JsonPropertyName("data")]
-        public CoinbaseSell Sell { get; set; }
+        public CoinbaseBuyResponseDetails Buy { get; set; }
     }
 
-    public class CoinbaseSell
+    public class CoinbaseBuyResponseDetails
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

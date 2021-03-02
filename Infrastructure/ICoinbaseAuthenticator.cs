@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace Coinbase_Portfolio_Tracker.Api.Infrastructure
+namespace Coinbase_Portfolio_Tracker.Infrastructure
 {
     public interface ICoinbaseAuthenticator
     {

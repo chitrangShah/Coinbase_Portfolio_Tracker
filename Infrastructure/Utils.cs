@@ -1,6 +1,6 @@
 using System;
 
-namespace Coinbase_Portfolio_Tracker.Api.Infrastructure
+namespace Coinbase_Portfolio_Tracker.Infrastructure
 {
     public static class Utils
     {

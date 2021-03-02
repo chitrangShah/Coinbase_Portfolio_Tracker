@@ -1,6 +1,6 @@
 using System;
 
-namespace Coinbase_Portfolio_Tracker.Api.Models.Coinbase.Dto
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
 {
     public class CoinbaseTransaction
     {

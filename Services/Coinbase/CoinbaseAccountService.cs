@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Coinbase_Portfolio_Tracker.Api.Models.Coinbase.Dto;
 using System.Net.Http;
-using Coinbase_Portfolio_Tracker.Api.Infrastructure;
+using System.Threading.Tasks;
+using Coinbase_Portfolio_Tracker.Infrastructure;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
 
-namespace Coinbase_Portfolio_Tracker.Api.Services.Coinbase
+namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
