@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Coinbase_Portfolio_Tracker
 {
@@ -9,8 +9,14 @@ namespace Coinbase_Portfolio_Tracker
     {
         static void Main(string[] args)
         {
-            var builder = new ConfigurationBuilder();
-            BuildConfig(builder);
+            // Configure services
+            var services = ConfigureServices();
+            
+            // Generate provider
+            var serviceProvider = services.BuildServiceProvider();
+            
+            // Start app
+            serviceProvider.GetService<App>()?.Run();
             
             // ** Coinbase Api Steps **
             // Create service client to connect to coinbase
@@ -27,12 +33,33 @@ namespace Coinbase_Portfolio_Tracker
             // Display in console or send via email
         }
 
-        static void BuildConfig(IConfigurationBuilder builder)
+        private static IServiceCollection ConfigureServices()
         {
-            builder.SetBasePath(Directory.GetCurrentDirectory())
+            var services = new ServiceCollection();
+            
+            // Configuration settings
+            var config = LoadConfiguration();
+            services.AddSingleton(config);
+            
+            // TODO: Configure options pattern for reading config settings 
+            
+            // TODO: Api services
+            
+            // Register App entry
+            services.AddTransient<App>();
+
+            return services;
+        }
+
+        private static IConfiguration LoadConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            return builder.Build();
         }
     }
 }
