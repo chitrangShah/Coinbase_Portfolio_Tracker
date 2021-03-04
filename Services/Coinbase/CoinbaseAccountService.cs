@@ -1,31 +1,26 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Coinbase_Portfolio_Tracker.Infrastructure;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
 
 namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
-        Task<IEnumerable<CoinbaseAccount>> GetAccountsAsync(string apiKey);
+        Task<IEnumerable<CoinbaseAccount>> GetAllAccountsAsync();
     }
 
-    public class CoinbaseAccountService : ICoinbaseAccountService
+    public class CoinbaseAccountService : RequestService, ICoinbaseAccountService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ICoinbaseAuthenticator _coinbaseAuthenticator;
-
-        public CoinbaseAccountService(IHttpClientFactory httpClientFactory, 
-            ICoinbaseAuthenticator coinbaseAuthenticator)
+        public CoinbaseAccountService(ICoinbaseConnectService coinbaseConnectService) 
+            : base(coinbaseConnectService)
         {
-            _httpClientFactory = httpClientFactory;
-            _coinbaseAuthenticator = coinbaseAuthenticator;
+            
         }
         
-        public Task<IEnumerable<CoinbaseAccount>> GetAccountsAsync(string apiKey)
+        public async Task<IEnumerable<CoinbaseAccount>> GetAllAccountsAsync()
         {
-            throw new System.NotImplementedException();
+            return await SendApiRequest<List<CoinbaseAccount>>(HttpMethod.Get, "/accounts");
         }
     }
 }

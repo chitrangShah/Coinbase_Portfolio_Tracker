@@ -1,4 +1,3 @@
-using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -8,19 +7,9 @@ namespace Coinbase_Portfolio_Tracker.Infrastructure
 {
     public class CoinbaseAuthenticator : ICoinbaseAuthenticator
     {
-        public string ApiKey { get; set; }
-        public string ApiSecret { get; set; }
-
-        public CoinbaseAuthenticator(string apiKey, string apiSecret)
+        public CoinbaseAuthenticator()
         {
-            if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(apiSecret))
-            {
-                throw new ArgumentException(
-                    $"{nameof(CoinbaseAuthenticator)} requires {nameof(apiKey)} and {nameof(apiSecret)}");
-            }
-
-            ApiKey = apiKey;
-            ApiSecret = apiSecret;
+            
         }
         
         /// <summary>

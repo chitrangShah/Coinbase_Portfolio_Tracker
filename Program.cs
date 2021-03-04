@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Coinbase_Portfolio_Tracker.Models.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -41,7 +42,8 @@ namespace Coinbase_Portfolio_Tracker
             var config = LoadConfiguration();
             services.AddSingleton(config);
             
-            // TODO: Configure options pattern for reading config settings 
+            // Appsettings 
+            services.Configure<CoinbaseOptions>(config.GetSection(CoinbaseOptions.SectionName));
             
             // TODO: Api services
             
