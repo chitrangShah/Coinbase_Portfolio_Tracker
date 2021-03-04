@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Models.Config;
+using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,7 +47,9 @@ namespace Coinbase_Portfolio_Tracker
             // Appsettings 
             services.Configure<CoinbaseOptions>(config.GetSection(CoinbaseOptions.SectionName));
             
-            // TODO: Api services
+            // Api services
+            services.AddTransient<ICoinbaseAccountService, CoinbaseAccountService>();
+            services.AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>();
             
             // Register App entry
             services.AddTransient<App>();

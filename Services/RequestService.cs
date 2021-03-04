@@ -16,7 +16,8 @@ namespace Coinbase_Portfolio_Tracker.Services
             _coinbaseConnectService = coinbaseConnectService;
         }
 
-        public async Task<T> SendApiRequest<T>(HttpMethod httpMethod, string requestUri, string content = "")
+        protected async Task<T> SendApiRequest<T>(HttpMethod httpMethod, 
+            string requestUri, string content = "", bool isAuthenticated = true)
         {
             var httpResponseMessage = await SendHttpRequestAsync(httpMethod, requestUri, content);
             var contentBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -27,7 +28,8 @@ namespace Coinbase_Portfolio_Tracker.Services
                 NullValueHandling = NullValueHandling.Ignore,
                 ContractResolver = new DefaultContractResolver
                 {
-                    NamingStrategy = new CamelCaseNamingStrategy()
+                    // property names might include '_' eg: last_name
+                    NamingStrategy = new SnakeCaseNamingStrategy()
                 }
             };
                 
@@ -35,13 +37,13 @@ namespace Coinbase_Portfolio_Tracker.Services
         }
 
         private async Task<HttpResponseMessage> SendHttpRequestAsync(
-            HttpMethod httpMethod, 
+            HttpMethod httpMethod,
             string requestUri,
-            string content = "")
+            string content = "",
+            bool isAuthenticated = true)
         {
-            var httpRequestMessage = string.IsNullOrWhiteSpace(content)
-                ? _coinbaseConnectService.CreateApiRequestMessage(httpMethod, requestUri)
-                : _coinbaseConnectService.CreateApiRequestMessage(httpMethod, requestUri, content);
+            var httpRequestMessage = _coinbaseConnectService.CreateApiRequestMessage(
+                httpMethod, requestUri, content, isAuthenticated);
             
             var httpResponseMessage = await HttpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
 

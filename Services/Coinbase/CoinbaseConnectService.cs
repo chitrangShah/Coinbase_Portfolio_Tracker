@@ -14,7 +14,8 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
         HttpRequestMessage CreateApiRequestMessage(
             HttpMethod httpMethod, 
             string requestUri, 
-            string contentBody = "");
+            string contentBody = "",
+            bool isAuthenticated = true);
     }
     
     public class CoinbaseConnectService : ICoinbaseConnectService
@@ -29,7 +30,8 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
             _coinbaseOptions = coinbaseOptions.CurrentValue;
         }
         
-        public HttpRequestMessage CreateApiRequestMessage(HttpMethod httpMethod, string requestUri, string contentBody = "")
+        public HttpRequestMessage CreateApiRequestMessage(HttpMethod httpMethod, 
+            string requestUri, string contentBody = "", bool isAuthenticated = true)
         {
             var apiUri = _coinbaseOptions.Endpoint;
             var requestMessage = new HttpRequestMessage(httpMethod, new Uri(new Uri(apiUri), requestUri))
@@ -39,6 +41,11 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                     : new StringContent(contentBody, Encoding.UTF8, "application/json")
             };
 
+            if (!isAuthenticated)
+            {
+                return requestMessage;
+            }
+            
             var timestamp = Utils.CurrentUnixTimestamp();
 
             if (_coinbaseAuthenticator == null)

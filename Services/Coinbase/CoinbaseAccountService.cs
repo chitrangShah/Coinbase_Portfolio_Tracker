@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
 
 namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
-        Task<IEnumerable<CoinbaseAccount>> GetAllAccountsAsync();
+        Task<IEnumerable<CoinbaseAccountResponse>> GetAllAccountsAsync();
     }
 
     public class CoinbaseAccountService : RequestService, ICoinbaseAccountService
@@ -18,9 +19,9 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
             
         }
         
-        public async Task<IEnumerable<CoinbaseAccount>> GetAllAccountsAsync()
+        public async Task<IEnumerable<CoinbaseAccountResponse>> GetAllAccountsAsync()
         {
-            return await SendApiRequest<List<CoinbaseAccount>>(HttpMethod.Get, "/accounts");
+            return await SendApiRequest<List<CoinbaseAccountResponse>>(HttpMethod.Get, "/accounts");
         }
     }
 }
