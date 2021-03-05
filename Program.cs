@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using Coinbase_Portfolio_Tracker.Models.Coinbase;
+using System.Threading.Tasks;
+using Coinbase_Portfolio_Tracker.Infrastructure;
 using Coinbase_Portfolio_Tracker.Models.Config;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ namespace Coinbase_Portfolio_Tracker
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // Configure services
             var services = ConfigureServices();
@@ -19,21 +20,7 @@ namespace Coinbase_Portfolio_Tracker
             var serviceProvider = services.BuildServiceProvider();
             
             // Start app
-            serviceProvider.GetService<App>()?.Run();
-            
-            // ** Coinbase Api Steps **
-            // Create service client to connect to coinbase
-            // Get account info
-
-            // ** Google Api Steps **
-            // Connect to spreadsheet
-            // Fill out 1st sheet, Portfolio Overview
-            // Fill out 2nd sheet, Wallet Details
-            // Fill out 3rd sheet, Order Details
-
-            // ** Display results **
-            // Create spreadsheet url
-            // Display in console or send via email
+            await serviceProvider.GetService<App>().Run();
         }
 
         private static IServiceCollection ConfigureServices()
@@ -48,6 +35,8 @@ namespace Coinbase_Portfolio_Tracker
             services.Configure<CoinbaseOptions>(config.GetSection(CoinbaseOptions.SectionName));
             
             // Api services
+            services.AddTransient<ICoinbaseAuthenticator, CoinbaseAuthenticator>();
+            services.AddTransient<ICoinbaseConnectService, CoinbaseConnectService>();
             services.AddTransient<ICoinbaseAccountService, CoinbaseAccountService>();
             services.AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>();
             

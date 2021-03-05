@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,20 +9,27 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
-        Task<IEnumerable<CoinbaseAccountResponse>> GetAllAccountsAsync();
+        Task<CoinbaseAccount> GetAccountInfo();
     }
 
     public class CoinbaseAccountService : RequestService, ICoinbaseAccountService
     {
-        public CoinbaseAccountService(ICoinbaseConnectService coinbaseConnectService) 
+        private readonly ICoinbaseSpotPriceService _coinbaseSpotPriceService;
+        
+        public CoinbaseAccountService(ICoinbaseConnectService coinbaseConnectService,
+            ICoinbaseSpotPriceService coinbaseSpotPriceService) 
             : base(coinbaseConnectService)
         {
-            
+            _coinbaseSpotPriceService = coinbaseSpotPriceService;
         }
         
-        public async Task<IEnumerable<CoinbaseAccountResponse>> GetAllAccountsAsync()
+        public async Task<CoinbaseAccount> GetAccountInfo()
         {
-            return await SendApiRequest<List<CoinbaseAccountResponse>>(HttpMethod.Get, "/accounts");
+            var cbAccountResponse = await SendApiRequest<CoinbaseAccountResponse>(HttpMethod.Get, "accounts");
+            
+            var currency_name = string.Empty;
+
+            return new CoinbaseAccount();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -24,33 +25,20 @@ namespace Coinbase_Portfolio_Tracker.Infrastructure
         /// <returns></returns>
         public string CreateSignature(double timestamp, HttpMethod httpMethod, string requestPath, string apiSecret, string body = "")
         {
-            byte[] secretKey = Encoding.UTF8.GetBytes(apiSecret);
-            HMACSHA256 hmac = new HMACSHA256(secretKey);
-            hmac.Initialize();
-            var message = timestamp.ToString("F0", CultureInfo.InvariantCulture) + httpMethod.ToString().ToUpper() + requestPath + body;
-            var bytes = Encoding.UTF8.GetBytes(message);
-            
-            byte[] rawHmac = hmac.ComputeHash(bytes);
-            var signature = ByteArrayToHex(rawHmac);
-
-            return signature;
+            var secretBytes = Encoding.UTF8.GetBytes(apiSecret);
+            var prehash = timestamp.ToString("F0", CultureInfo.InvariantCulture) + httpMethod.ToString().ToUpper() +
+                          requestPath + body;
+            return ByteArrayToHex(prehash, secretBytes);
         }
         
         /// <summary>
         /// https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
         /// </summary>
-        private static string ByteArrayToHex(byte[] barray)
+        private static string ByteArrayToHex(string str, byte[] secret)
         {
-            char[] c = new char[barray.Length * 2];
-            byte b;
-            for (int i = 0; i < barray.Length; ++i)
-            {
-                b = ((byte)(barray[i] >> 4));
-                c[i * 2] = (char)(b > 9 ? b + 0x37 : b + 0x30);
-                b = ((byte)(barray[i] & 0xF));
-                c[i * 2 + 1] = (char)(b > 9 ? b + 0x37 : b + 0x30);
-            }
-            return new string(c);
+            var bytes = Encoding.UTF8.GetBytes(str);
+            using var hmaccsha = new HMACSHA256(secret);
+            return Convert.ToBase64String(hmaccsha.ComputeHash(bytes));
         }
     }
 }

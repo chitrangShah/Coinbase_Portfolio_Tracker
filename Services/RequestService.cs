@@ -1,5 +1,9 @@
+using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Coinbase_Portfolio_Tracker.Infrastructure;
+using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -52,10 +56,31 @@ namespace Coinbase_Portfolio_Tracker.Services
                 return httpResponseMessage;
             }
 
-            var contentBody = await httpResponseMessage.Content.ReadAsStringAsync();
+            var contentBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            CoinbaseErrorResponse errorResponse;
             
-            // TODO: Fix error handling for Coinbase error type
-            throw new HttpRequestException();
+            try
+            {
+                errorResponse = JsonConvert.DeserializeObject<CoinbaseErrorResponse>(contentBody);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            if (errorResponse?.Errors == null) 
+                throw new HttpRequestException();
+
+            var ex = new CoinbaseException(errorResponse.Errors.ErrorMessage)
+            {
+                RequestMessage = httpRequestMessage,
+                ResponseMessage = httpResponseMessage,
+                StatusCode = httpResponseMessage.StatusCode
+            };
+
+            throw ex;
+
         }
     }
 }
