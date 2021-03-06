@@ -34,7 +34,7 @@ namespace Coinbase_Portfolio_Tracker
             // Appsettings 
             services.Configure<CoinbaseOptions>(config.GetSection(CoinbaseOptions.SectionName));
             
-            // Api services
+            // Api services 
             services.AddTransient<ICoinbaseAuthenticator, CoinbaseAuthenticator>();
             services.AddTransient<ICoinbaseConnectService, CoinbaseConnectService>();
             services.AddTransient<ICoinbaseAccountService, CoinbaseAccountService>();
