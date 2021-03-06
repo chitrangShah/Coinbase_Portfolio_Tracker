@@ -72,7 +72,7 @@ namespace Coinbase_Portfolio_Tracker.Services
             if (errorResponse?.Errors == null) 
                 throw new HttpRequestException();
 
-            var ex = new CoinbaseException(errorResponse.Errors.ErrorMessage)
+            var ex = new CoinbaseException(errorResponse.Errors[0].ErrorMessage)
             {
                 RequestMessage = httpRequestMessage,
                 ResponseMessage = httpResponseMessage,

@@ -6,7 +6,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
     public class CoinbaseErrorResponse
     {
         [JsonPropertyName("errors")]
-        public CoinbaseErrorResponseDetails Errors { get; set; }
+        public List<CoinbaseErrorResponseDetails> Errors { get; set; }
     }
 
     public class CoinbaseErrorResponseDetails
