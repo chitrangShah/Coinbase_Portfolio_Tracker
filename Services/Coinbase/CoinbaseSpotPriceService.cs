@@ -7,7 +7,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseSpotPriceService
     {
-        Task<CoinbasePrice> GetSpotPrice(string currencyPair);
+        Task<CoinbasePrice> GetSpotPriceAsync(string currencyPair);
     }
 
     public class CoinbaseSpotPriceService : RequestService, ICoinbaseSpotPriceService
@@ -17,11 +17,13 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
         {
         }
 
-        public async Task<CoinbasePrice> GetSpotPrice(string currencyPair)
+        public async Task<CoinbasePrice> GetSpotPriceAsync(string currencyPair)
         {
             var spotPriceResponse = await SendApiRequest<CoinbaseSpotPriceResponse>(
                 HttpMethod.Get, 
-                $"/prices/{currencyPair}/spot");
+                $"prices/{currencyPair}/spot",
+                null,
+                false);
 
             return new CoinbasePrice()
             {

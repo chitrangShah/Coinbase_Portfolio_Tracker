@@ -47,12 +47,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                 return requestMessage;
             }
 
-            DateTimeOffset epoch = DateTimeOffset.UnixEpoch;
-            DateTimeOffset now = DateTimeOffset.UtcNow;
- 
-            TimeSpan ts = now.Subtract(epoch);
             string timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(CultureInfo.CurrentCulture);
-                //ts.TotalSeconds.ToString("F0");
 
             if (_coinbaseAuthenticator == null)
             {

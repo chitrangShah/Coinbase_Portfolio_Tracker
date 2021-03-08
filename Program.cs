@@ -48,6 +48,12 @@ namespace Coinbase_Portfolio_Tracker
 
         private static IConfiguration LoadConfiguration()
         {
+            /*
+            WARNING - This file will be checked into source control. Do not change this file.
+            Use this as an example file only.
+            Use {env.EnvironmentName}.json as your configuration file as it will not be checked into source control.
+            {env.EnvironmentName} values : development, staging, production */
+            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

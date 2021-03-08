@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbaseSpotPriceResponse
     {
-        [JsonPropertyName("data")]
+        [JsonProperty("data")]
         public CoinbasePriceResponseDetails SpotPrice { get; set; }
     }
 }

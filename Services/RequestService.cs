@@ -23,7 +23,7 @@ namespace Coinbase_Portfolio_Tracker.Services
         protected async Task<T> SendApiRequest<T>(HttpMethod httpMethod, 
             string requestUri, string content = "", bool isAuthenticated = true)
         {
-            var httpResponseMessage = await SendHttpRequestAsync(httpMethod, requestUri, content);
+            var httpResponseMessage = await SendHttpRequestAsync(httpMethod, requestUri, content, isAuthenticated);
             var contentBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             var serializerSettings = new JsonSerializerSettings()

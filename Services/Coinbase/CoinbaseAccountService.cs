@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
@@ -9,27 +9,30 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
-        Task<CoinbaseAccount> GetAccountInfo();
+        Task<List<CoinbaseAccount>> GetAllAccountsAsync();
     }
 
     public class CoinbaseAccountService : RequestService, ICoinbaseAccountService
     {
-        private readonly ICoinbaseSpotPriceService _coinbaseSpotPriceService;
-        
-        public CoinbaseAccountService(ICoinbaseConnectService coinbaseConnectService,
-            ICoinbaseSpotPriceService coinbaseSpotPriceService) 
+        public CoinbaseAccountService(ICoinbaseConnectService coinbaseConnectService) 
             : base(coinbaseConnectService)
         {
-            _coinbaseSpotPriceService = coinbaseSpotPriceService;
+            
         }
         
-        public async Task<CoinbaseAccount> GetAccountInfo()
+        public async Task<List<CoinbaseAccount>> GetAllAccountsAsync()
         {
-            var cbAccountResponse = await SendApiRequest<CoinbaseAccountResponse>(HttpMethod.Get, "accounts");
-            
-            var currency_name = string.Empty;
+            var cbAccountsResponse = await SendApiRequest<CoinbaseAccountResponse>(HttpMethod.Get, "accounts");
 
-            return new CoinbaseAccount();
+            return cbAccountsResponse.Accounts
+                .Select(account => new CoinbaseAccount() 
+                    {
+                        Id = account.Id,
+                        Name = account.Name,
+                        AccountCurrency = account.Currency.Code, 
+                        BalanceAmount = account.Balance.Amount, 
+                        BalanceAmountCurrency = account.Balance.Currency
+                    }).ToList();
         }
     }
 }

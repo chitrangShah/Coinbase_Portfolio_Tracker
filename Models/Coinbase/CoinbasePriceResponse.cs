@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
-    public abstract class CoinbasePriceResponseDetails
+    public class CoinbasePriceResponseDetails
     {
         [JsonPropertyName("amount")]
         public decimal Amount { get; set; }
