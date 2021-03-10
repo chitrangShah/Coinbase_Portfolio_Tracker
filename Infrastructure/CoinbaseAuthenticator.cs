@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -29,27 +27,24 @@ namespace Coinbase_Portfolio_Tracker.Infrastructure
             var secretKey = Encoding.UTF8.GetBytes(apiSecret);
             var prehash = Encoding.UTF8.GetBytes(timestamp + httpMethod.Method.ToUpperInvariant() + requestPath + body);
 
-            using( var hmac = new HMACSHA256(secretKey) )
-            {
-                var signature = hmac.ComputeHash(prehash);
+            using var hmac = new HMACSHA256(secretKey);
+            var signature = hmac.ComputeHash(prehash);
                 
-                // return hex string
-                return ByteArrayToHex(signature);
-            }
+            // return hex string
+            return ByteArrayToHex(signature);
         }
         
         /// <summary>
         /// https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
         /// </summary>
-        private static string ByteArrayToHex(byte[] barray)
+        private static string ByteArrayToHex(byte[] bArray)
         {
-            char[] c = new char[barray.Length * 2];
-            int b;
-            for (int i = 0; i < barray.Length; i++)
+            char[] c = new char[bArray.Length * 2];
+            for (int i = 0; i < bArray.Length; i++)
             {
-                b = barray[i] >> 4;
+                var b = bArray[i] >> 4;
                 c[i * 2] = (char)(87 + b + (((b - 10) >> 31) & -39));
-                b = barray[i] & 0xF;
+                b = bArray[i] & 0xF;
                 c[i * 2 + 1] = (char)(87 + b + (((b - 10) >> 31) & -39));
             }
             return new string(c);
