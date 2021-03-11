@@ -39,6 +39,7 @@ namespace Coinbase_Portfolio_Tracker
             services.AddTransient<ICoinbaseConnectService, CoinbaseConnectService>();
             services.AddTransient<ICoinbaseAccountService, CoinbaseAccountService>();
             services.AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>();
+            services.AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>();
             
             // Register App entry
             services.AddTransient<App>();

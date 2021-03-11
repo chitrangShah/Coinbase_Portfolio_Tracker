@@ -2,10 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coinbase_Portfolio_Tracker", "Coinbase_Portfolio_Tracker.csproj", "{3C7CCB6F-8911-4170-B0C4-13C73BDF35D1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{501DA700-AE7D-4A03-9988-DE497516BBAE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6E110F60-9B0C-4384-A5A6-1C95F3CEB3B2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -28,10 +28,10 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
         public CoinbasePriceResponseDetails Native_Amount { get; set; }
         
         [JsonPropertyName("created_at")]
-        public DateTime Created_At { get; set; }
+        public DateTimeOffset? Created_At { get; set; }
         
         [JsonPropertyName("updated_at")]
-        public DateTime Updated_At { get; set; }
+        public DateTimeOffset? Updated_At { get; set; }
         
         [JsonPropertyName("buy")]
         public CoinbaseTransactionBuyResponseDetails Buy { get; set; }
