@@ -70,6 +70,7 @@ namespace Coinbase_Portfolio_Tracker
                 }
                 
                 // Get transactions
+                
             }
             // ** Google Api Steps **
             // Connect to spreadsheet
