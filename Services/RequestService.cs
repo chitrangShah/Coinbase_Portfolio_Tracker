@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Infrastructure;
+using Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Newtonsoft.Json;
@@ -34,6 +34,10 @@ namespace Coinbase_Portfolio_Tracker.Services
                 {
                     // property names might include '_' eg: last_name
                     NamingStrategy = new SnakeCaseNamingStrategy()
+                },
+                Converters =
+                {
+                    new CoinbaseTransactionServiceConverter()
                 }
             };
                 

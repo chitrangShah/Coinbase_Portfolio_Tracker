@@ -1,13 +1,13 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbasePriceResponseDetails
     {
-        [JsonPropertyName("amount")]
+        [JsonProperty("amount")]
         public decimal Amount { get; set; }
         
-        [JsonPropertyName("currency")]
+        [JsonProperty("currency")]
         public string Currency { get; set; }
     }
 }

@@ -1,38 +1,38 @@
 using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbaseBuyResponse
     {
-        [JsonPropertyName("data")]
+        [JsonProperty("data")]
         public CoinbaseBuyResponseDetails Buy { get; set; }
     }
 
     public class CoinbaseBuyResponseDetails
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
         
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
         
-        [JsonPropertyName("amount")]
+        [JsonProperty("amount")]
         public CoinbasePriceResponseDetails Amount { get; set; }
         
-        [JsonPropertyName("total")]
+        [JsonProperty("total")]
         public CoinbasePriceResponseDetails Total { get; set; }
         
-        [JsonPropertyName("subtotal")]
+        [JsonProperty("subtotal")]
         public CoinbasePriceResponseDetails Subtotal { get; set; }
         
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTime Created_At { get; set; }
         
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTime Updated_At { get; set; }
         
-        [JsonPropertyName("fee")]
+        [JsonProperty("fee")]
         public CoinbasePriceResponseDetails Fee { get; set; }
     }
 }

@@ -1,66 +1,66 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbaseTransactionResponse
     {
-        [JsonPropertyName("data")]
+        [JsonProperty("data")]
         public List<CoinbaseTransactionResponseDetails> Transactions { get; set; }
     }
 
     public class CoinbaseTransactionResponseDetails
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
         
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
         
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
         
-        [JsonPropertyName("amount")]
+        [JsonProperty("amount")]
         public CoinbasePriceResponseDetails Amount { get; set; }
         
-        [JsonPropertyName("native_amount")]
+        [JsonProperty("native_amount")]
         public CoinbasePriceResponseDetails Native_Amount { get; set; }
         
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset? Created_At { get; set; }
         
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset? Updated_At { get; set; }
         
-        [JsonPropertyName("buy")]
+        [JsonProperty("buy")]
         public CoinbaseTransactionBuyResponseDetails Buy { get; set; }
         
-        [JsonPropertyName("sell")]
+        [JsonProperty("sell")]
         public CoinbaseTransactionSendResponseDetails Sell { get; set; }
     }
 
     public class CoinbaseTransactionBuyResponseDetails
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
         
-        [JsonPropertyName("resource")]
+        [JsonProperty("resource")]
         public string Resource { get; set; }
         
-        [JsonPropertyName("resource_path")]
+        [JsonProperty("resource_path")]
         public string Resource_Path { get; set; }
     }
     
     public class CoinbaseTransactionSendResponseDetails
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
         
-        [JsonPropertyName("resource")]
+        [JsonProperty("resource")]
         public string Resource { get; set; }
         
-        [JsonPropertyName("resource_path")]
+        [JsonProperty("resource_path")]
         public string Resource_Path { get; set; }
     }
 }

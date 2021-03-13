@@ -1,23 +1,23 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase
 {
     public class CoinbaseErrorResponse
     {
-        [JsonPropertyName("errors")]
+        [JsonProperty("errors")]
         public List<CoinbaseErrorResponseDetails> Errors { get; set; }
     }
 
     public class CoinbaseErrorResponseDetails
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string ErrorId { get; set; }
         
-        [JsonPropertyName("message")]
+        [JsonProperty("message")]
         public string ErrorMessage { get; set; }
         
-        [JsonPropertyName("url")]
+        [JsonProperty("url")]
         public string ErrorDocumentationUrl { get; set; }
     }
 }
