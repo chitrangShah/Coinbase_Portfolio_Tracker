@@ -34,8 +34,6 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                 .Transactions
                 .Select(transaction => new CoinbaseTransaction()
                 {
-                    IsABuy = transaction.Buy != null,
-                    IsASell = transaction.Sell != null,
                     Type = transaction.Type,
                     TransactionAmount = transaction.Amount.Amount,
                     TransactionAmountCurrency = transaction.Amount.Currency,
