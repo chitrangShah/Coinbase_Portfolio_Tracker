@@ -1,26 +1,27 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace Coinbase_Portfolio_Tracker
 {
-    public class App
+    public class App : IHostedService
     {
-        private readonly IConfiguration _configuration;
         private readonly ICoinbaseAccountService _coinbaseAccountService;
         private readonly ICoinbaseSpotPriceService _coinbaseSpotPriceService;
+        private readonly ICoinbaseTransactionService _coinbaseTransactionService;
 
-        public App(IConfiguration configuration,
-            ICoinbaseAccountService coinbaseAccountService,
-            ICoinbaseSpotPriceService coinbaseSpotPriceService)
+        public App(ICoinbaseAccountService coinbaseAccountService,
+            ICoinbaseSpotPriceService coinbaseSpotPriceService,
+            ICoinbaseTransactionService coinbaseTransactionService)
         {
-            _configuration = configuration;
             _coinbaseAccountService = coinbaseAccountService;
             _coinbaseSpotPriceService = coinbaseSpotPriceService;
+            _coinbaseTransactionService = coinbaseTransactionService;
         }
-        
-        public async Task Run()
+
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             var myCoinbasePerformance = new Dictionary<string, dynamic>()
             {
@@ -68,19 +69,22 @@ namespace Coinbase_Portfolio_Tracker
 
                     myCoinbasePerformance["currencies"].Add(currencyDict);
                 }
-                
-                // Get transactions
-                
-            }
-            // ** Google Api Steps **
-            // Connect to spreadsheet
-            // Fill out 1st sheet, Portfolio Overview
-            // Fill out 2nd sheet, Wallet Details
-            // Fill out 3rd sheet, Order Details
 
-            // ** Display results **
-            // Create spreadsheet url
-            // Display in console or send via email
+                // Get transactions
+                var transactions = await _coinbaseTransactionService.GetAllTransactionsAsync(account.Id);
+
+                foreach (var transaction in transactions)
+                {
+                    // Buys
+
+                    // Sells
+                }
+            }
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

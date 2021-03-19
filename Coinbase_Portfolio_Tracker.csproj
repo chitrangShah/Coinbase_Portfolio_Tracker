@@ -17,9 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Remove="Api\Config\**" />
     </ItemGroup>
 
@@ -29,6 +26,13 @@
 
     <ItemGroup>
       <EmbeddedResource Remove="Api\Config\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

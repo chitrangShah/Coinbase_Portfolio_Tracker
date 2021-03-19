@@ -1,11 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Infrastructure;
 using Coinbase_Portfolio_Tracker.Models.Config;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Coinbase_Portfolio_Tracker
 {
@@ -13,55 +14,40 @@ namespace Coinbase_Portfolio_Tracker
     {
         static async Task Main(string[] args)
         {
-            // Configure services
-            var services = ConfigureServices();
-            
-            // Generate provider
-            var serviceProvider = services.BuildServiceProvider();
-            
-            // Start app
-            await serviceProvider.GetService<App>().Run();
-        }
+            await Host.CreateDefaultBuilder(args)
+                .UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    var env = builderContext.HostingEnvironment;
 
-        private static IServiceCollection ConfigureServices()
-        {
-            var services = new ServiceCollection();
-            
-            // Configuration settings
-            var config = LoadConfiguration();
-            services.AddSingleton(config);
-            
-            // Appsettings 
-            services.Configure<CoinbaseOptions>(config.GetSection(CoinbaseOptions.SectionName));
-            
-            // Api services 
-            services.AddTransient<ICoinbaseAuthenticator, CoinbaseAuthenticator>();
-            services.AddTransient<ICoinbaseConnectService, CoinbaseConnectService>();
-            services.AddTransient<ICoinbaseAccountService, CoinbaseAccountService>();
-            services.AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>();
-            services.AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>();
-            
-            // Register App entry
-            services.AddTransient<App>();
+                    config.SetBasePath(env.ContentRootPath);
 
-            return services;
-        }
+                    config.AddJsonFile(
+                        "appsettings.json",
+                        optional: false, reloadOnChange: true);
+                    config.AddJsonFile(
+                        $"appsettings.{env.EnvironmentName}.json",
+                        optional: true, reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    // Add logging framework
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services
+                        .AddHostedService<App>()
+                        .AddTransient<ICoinbaseAuthenticator, CoinbaseAuthenticator>()
+                        .AddTransient<ICoinbaseConnectService, CoinbaseConnectService>()
+                        .AddTransient<ICoinbaseAccountService, CoinbaseAccountService>()
+                        .AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>()
+                        .AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>();
 
-        private static IConfiguration LoadConfiguration()
-        {
-            /*
-            WARNING - This file will be checked into source control. Do not change this file.
-            Use this as an example file only.
-            Use {env.EnvironmentName}.json as your configuration file as it will not be checked into source control.
-            {env.EnvironmentName} values : development, staging, production */
-            
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            return builder.Build();
+                    services.AddOptions<CoinbaseOptions>()
+                        .Bind(hostContext.Configuration.GetSection(CoinbaseOptions.SectionName));
+                })
+                .RunConsoleAsync();
         }
     }
 }
