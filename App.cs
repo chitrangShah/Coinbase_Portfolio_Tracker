@@ -67,7 +67,7 @@ namespace Coinbase_Portfolio_Tracker
                         {"orders", new List<string>()}
                     };
 
-                    myCoinbasePerformance["currencies"].Add(currencyDict);
+                    myCoinbasePerformance["currencies"] = currencyDict;
                 }
 
                 // Get transactions

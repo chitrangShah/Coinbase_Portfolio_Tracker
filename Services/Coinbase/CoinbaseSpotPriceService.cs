@@ -22,7 +22,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
             var spotPriceResponse = await SendApiRequest<CoinbaseSpotPriceResponse>(
                 HttpMethod.Get, 
                 $"prices/{currencyPair}/spot",
-                null,
+                "",
                 false);
 
             return new CoinbasePrice()
