@@ -11,7 +11,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         public decimal TransactionNativeAmount { get; set; }
         public string TransactionNativeAmountCurrency { get; set; }
         public DateTimeOffset? TransactionCreatedDate { get; set; }
-        public string Id { get; set; }
+        public string TypeId { get; set; }
         public string Resource { get; set; }
         public string ResourcePath { get; set; }
     }

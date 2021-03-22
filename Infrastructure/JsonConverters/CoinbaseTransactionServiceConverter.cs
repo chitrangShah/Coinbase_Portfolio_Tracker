@@ -1,7 +1,8 @@
 using System;
+using System.Reflection;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
-using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters
 {
@@ -16,43 +17,36 @@ namespace Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters
         {
             if (reader.TokenType == JsonToken.Null)
                 return null;
-            
-            // start object
-            reader.Read();
-            
-            //we should be at geometry type property now
-            if ((string)reader.Value != "type") 
-                throw new InvalidOperationException();
-            
-            reader.Read();
-            
-            var type = (string)reader.Value;
 
-            CoinbaseTransactionResponseDetails value = type switch
+            if (reader.TokenType != JsonToken.StartObject) 
+                return new JsonException("No properties found for read");
+            
+            JObject item = JObject.Load(reader);
+
+            if (item["type"] == null)
+                return new JsonException("No properties found for read");
+
+            var transactionType = item["type"].Value<string>();
+            
+            switch (transactionType)
             {
-                "buy" => new CoinbaseTransactionBuyResponseDetails(),
-                "sell" => new CoinbaseTransactionSellResponseDetails(),
-                _ => throw new NotSupportedException()
-            };
-            
-            // move to inner object property
-            //should probably confirm name here
-            reader.Read();
-
-            //move to inner object
-            reader.Read();
-            
-            serializer.Populate(reader, value);
-            
-            //move outside container (should be end object)
-            reader.Read();
-            
-            return value;
+                case "buy":
+                    var buyResponse = new CoinbaseTransactionBuyResponseDetails();
+                    serializer.Populate(item.CreateReader(), buyResponse);
+                    return buyResponse;
+                case "sell":
+                    var sellResponse = new CoinbaseTransactionSellResponseDetails();
+                    serializer.Populate(item.CreateReader(), sellResponse);
+                    return sellResponse;
+                default:
+                    throw new JsonException("");
+            }
         }
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(CoinbaseTransaction).IsAssignableFrom(objectType);
+            return typeof(CoinbaseTransactionResponseDetails)
+                .GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
     }
 }

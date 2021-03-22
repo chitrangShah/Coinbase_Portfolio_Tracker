@@ -38,9 +38,9 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                     TransactionAmount = transaction.Amount.Amount,
                     TransactionAmountCurrency = transaction.Amount.Currency,
                     TransactionId = transaction.Id,
-                    TransactionNativeAmount = transaction.Native_Amount.Amount,
-                    TransactionNativeAmountCurrency = transaction.Native_Amount.Currency,
-                    TransactionCreatedDate = transaction.Created_At
+                    TransactionNativeAmount = transaction.NativeAmount.Amount,
+                    TransactionNativeAmountCurrency = transaction.NativeAmount.Currency,
+                    TransactionCreatedDate = transaction.CreatedAt
                 }).ToList();
         }
     }

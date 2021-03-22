@@ -17,6 +17,12 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
         [JsonProperty("status")]
         public string Status { get; set; }
         
+        [JsonProperty("payment_method")]
+        public CoinbaseResourceResponseDetails PaymentMethod { get; set; }
+        
+        [JsonProperty("transaction")]
+        public CoinbaseResourceResponseDetails Transaction { get; set; }
+        
         [JsonProperty("amount")]
         public CoinbasePriceResponseDetails Amount { get; set; }
         
@@ -27,12 +33,27 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
         public CoinbasePriceResponseDetails Subtotal { get; set; }
         
         [JsonProperty("created_at")]
-        public DateTime Created_At { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
         
         [JsonProperty("updated_at")]
-        public DateTime Updated_At { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
+        
+        [JsonProperty("resource")]
+        public string Resource { get; set; }
+        
+        [JsonProperty("resource_path")]
+        public string ResourcePath { get; set; }
+        
+        [JsonProperty("committed")]
+        public bool Committed { get; set; }
+        
+        [JsonProperty("instant")]
+        public bool Instant { get; set; }
         
         [JsonProperty("fee")]
         public CoinbasePriceResponseDetails Fee { get; set; }
+        
+        [JsonProperty("payout_at")]
+        public DateTimeOffset? PayoutAt { get; set; }
     }
 }

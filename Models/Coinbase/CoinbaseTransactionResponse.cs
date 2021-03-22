@@ -10,7 +10,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
         [JsonProperty("data")]
         public List<CoinbaseTransactionResponseDetails> Transactions { get; set; }
     }
-
+    
     [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
     public class CoinbaseTransactionResponseDetails
     {
@@ -27,38 +27,26 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase
         public CoinbasePriceResponseDetails Amount { get; set; }
         
         [JsonProperty("native_amount")]
-        public CoinbasePriceResponseDetails Native_Amount { get; set; }
+        public CoinbasePriceResponseDetails NativeAmount { get; set; }
         
         [JsonProperty("created_at")]
-        public DateTimeOffset? Created_At { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; }
         
         [JsonProperty("updated_at")]
-        public DateTimeOffset? Updated_At { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
     }
-
+    
     [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
     public class CoinbaseTransactionBuyResponseDetails : CoinbaseTransactionResponseDetails
     {
-        [JsonProperty("id")]
-        public string BuyId { get; set; }
-        
-        [JsonProperty("resource")]
-        public string Resource { get; set; }
-        
-        [JsonProperty("resource_path")]
-        public string Resource_Path { get; set; }
+        [JsonProperty("buy")]
+        public CoinbaseResourceResponseDetails Buy { get; set; }
     }
     
     [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
     public class CoinbaseTransactionSellResponseDetails : CoinbaseTransactionResponseDetails
     {
-        [JsonProperty("id")]
-        public string SellId { get; set; }
-        
-        [JsonProperty("resource")]
-        public string Resource { get; set; }
-        
-        [JsonProperty("resource_path")]
-        public string Resource_Path { get; set; }
+        [JsonProperty("sell")]
+        public CoinbaseResourceResponseDetails Sell { get; set; }
     }
 }
