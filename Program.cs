@@ -19,7 +19,7 @@ namespace Coinbase_Portfolio_Tracker
                 .ConfigureAppConfiguration((builderContext, config) =>
                 {
                     var env = builderContext.HostingEnvironment;
-
+                    
                     config.SetBasePath(env.ContentRootPath);
 
                     config.AddJsonFile(
@@ -28,11 +28,22 @@ namespace Coinbase_Portfolio_Tracker
                     config.AddJsonFile(
                         $"appsettings.{env.EnvironmentName}.json",
                         optional: true, reloadOnChange: true);
+                    
+                    // Added before AddUserSecrets to let user secrets override
+                    // environment variables.
                     config.AddEnvironmentVariables();
+                    
+                    // Add user secrets only for development
+                    if (!env.IsDevelopment()) 
+                        return;
+                    
+                    var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
+                    config.AddUserSecrets(appAssembly, true);
                 })
                 .ConfigureLogging(logging =>
                 {
                     // Add logging framework
+                    
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
