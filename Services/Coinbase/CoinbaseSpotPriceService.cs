@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Responses;
 
 namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {

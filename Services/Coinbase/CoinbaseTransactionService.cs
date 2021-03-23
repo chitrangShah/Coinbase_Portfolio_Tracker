@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Responses;
 
 namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
@@ -37,10 +38,10 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                     Type = transaction.Type,
                     TransactionAmount = transaction.Amount.Amount,
                     TransactionAmountCurrency = transaction.Amount.Currency,
-                    TransactionId = transaction.Id,
                     TransactionNativeAmount = transaction.NativeAmount.Amount,
                     TransactionNativeAmountCurrency = transaction.NativeAmount.Currency,
-                    TransactionCreatedDate = transaction.CreatedAt
+                    TransactionCreatedDate = transaction.CreatedAt,
+                    
                 }).ToList();
         }
     }

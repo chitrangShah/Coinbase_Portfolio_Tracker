@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Coinbase_Portfolio_Tracker.Models.Coinbase
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
 {
     public class CoinbaseBuyResponse
     {

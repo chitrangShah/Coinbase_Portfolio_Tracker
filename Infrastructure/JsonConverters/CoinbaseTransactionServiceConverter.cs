@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

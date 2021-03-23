@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters;
 using Newtonsoft.Json;
 
-namespace Coinbase_Portfolio_Tracker.Models.Coinbase
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
 {
     public class CoinbaseTransactionResponse
     {

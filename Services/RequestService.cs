@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Infrastructure;
 using Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters;
 using Coinbase_Portfolio_Tracker.Models.Coinbase;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Responses;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

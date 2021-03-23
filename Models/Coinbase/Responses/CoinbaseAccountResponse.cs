@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Coinbase_Portfolio_Tracker.Models.Coinbase
+namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
 {
     public class CoinbaseAccountResponse
     {
