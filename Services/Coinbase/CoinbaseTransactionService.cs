@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Coinbase_Portfolio_Tracker.Models.Coinbase;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Extensions;
 using Coinbase_Portfolio_Tracker.Models.Coinbase.Responses;
 
 namespace Coinbase_Portfolio_Tracker.Services.Coinbase
@@ -35,6 +35,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                 .Transactions
                 .Select(transaction => new CoinbaseTransaction()
                 {
+                    TransactionId = transaction.Id,
                     Type = transaction.Type,
                     TransactionAmount = transaction.Amount.Amount,
                     TransactionAmountCurrency = transaction.Amount.Currency,
@@ -42,6 +43,10 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
                     TransactionNativeAmountCurrency = transaction.NativeAmount.Currency,
                     TransactionCreatedDate = transaction.CreatedAt,
                     
+                    // This can improved to use Strategy pattern for other types 
+                    // For now, we only care about buy and sell
+                    Buy = transaction.Buy.ToBuyTransaction(),
+                    Sell = transaction.Sell.ToSellTransaction()
                 }).ToList();
         }
     }

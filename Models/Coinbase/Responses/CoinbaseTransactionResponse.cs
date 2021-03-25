@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Coinbase_Portfolio_Tracker.Infrastructure.JsonConverters;
 using Newtonsoft.Json;
 
 namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
@@ -11,7 +10,6 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
         public List<CoinbaseTransactionResponseDetails> Transactions { get; set; }
     }
     
-    [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
     public class CoinbaseTransactionResponseDetails
     {
         [JsonProperty("id")]
@@ -34,18 +32,10 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Responses
         
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-    }
-    
-    [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
-    public class CoinbaseTransactionBuyResponseDetails : CoinbaseTransactionResponseDetails
-    {
+        
         [JsonProperty("buy")]
         public CoinbaseResourceResponseDetails Buy { get; set; }
-    }
-    
-    [JsonConverter(typeof(CoinbaseTransactionServiceConverter))]
-    public class CoinbaseTransactionSellResponseDetails : CoinbaseTransactionResponseDetails
-    {
+        
         [JsonProperty("sell")]
         public CoinbaseResourceResponseDetails Sell { get; set; }
     }
