@@ -10,7 +10,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseAccountService
     {
-        Task<List<CoinbaseAccount>> GetAllAccountsAsync();
+        Task<List<CoinbaseAccount>> GetAccountsAsync();
     }
 
     public class CoinbaseAccountService : RequestService, ICoinbaseAccountService
@@ -21,7 +21,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
             
         }
         
-        public async Task<List<CoinbaseAccount>> GetAllAccountsAsync()
+        public async Task<List<CoinbaseAccount>> GetAccountsAsync()
         {
             var cbAccountsResponse = await SendApiRequest<CoinbaseAccountResponse>(HttpMethod.Get, "accounts");
 

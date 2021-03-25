@@ -11,14 +11,17 @@ namespace Coinbase_Portfolio_Tracker
         private readonly ICoinbaseAccountService _coinbaseAccountService;
         private readonly ICoinbaseSpotPriceService _coinbaseSpotPriceService;
         private readonly ICoinbaseTransactionService _coinbaseTransactionService;
+        private readonly ICoinbaseBuyService _coinbaseBuyService;
 
         public App(ICoinbaseAccountService coinbaseAccountService,
             ICoinbaseSpotPriceService coinbaseSpotPriceService,
-            ICoinbaseTransactionService coinbaseTransactionService)
+            ICoinbaseTransactionService coinbaseTransactionService,
+            ICoinbaseBuyService coinbaseBuyService)
         {
             _coinbaseAccountService = coinbaseAccountService;
             _coinbaseSpotPriceService = coinbaseSpotPriceService;
             _coinbaseTransactionService = coinbaseTransactionService;
+            _coinbaseBuyService = coinbaseBuyService;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -34,7 +37,7 @@ namespace Coinbase_Portfolio_Tracker
             // ** Coinbase Api Steps **
             // Create service client to connect to coinbase
             // Get account info
-            var accounts = await _coinbaseAccountService.GetAllAccountsAsync();
+            var accounts = await _coinbaseAccountService.GetAccountsAsync();
 
             foreach (var account in accounts)
             {
@@ -75,9 +78,21 @@ namespace Coinbase_Portfolio_Tracker
 
                 foreach (var transaction in transactions)
                 {
-                    // Buys
-
-                    // Sells
+                    switch (transaction.Type)
+                    {
+                        case "buy":
+                        {
+                            var symbol = transaction.TransactionAmountCurrency;
+                            var amount = transaction.TransactionAmount;
+                            var datetime = transaction.TransactionCreatedDate;
+                    
+                            // buy price and fee
+                            var buy = await _coinbaseBuyService.GetBuy(account.Id, transaction.Buy.Id);
+                            break;
+                        }
+                        case "sell":
+                            break;
+                    }
                 }
             }
         }

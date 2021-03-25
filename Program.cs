@@ -53,7 +53,9 @@ namespace Coinbase_Portfolio_Tracker
                         .AddTransient<ICoinbaseConnectService, CoinbaseConnectService>()
                         .AddTransient<ICoinbaseAccountService, CoinbaseAccountService>()
                         .AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>()
-                        .AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>();
+                        .AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>()
+                        .AddTransient<ICoinbaseBuyService, CoinbaseBuyService>();
+                        
 
                     services.AddOptions<CoinbaseOptions>()
                         .Bind(hostContext.Configuration.GetSection(CoinbaseOptions.SectionName));
