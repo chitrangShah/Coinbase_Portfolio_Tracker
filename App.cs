@@ -1,7 +1,8 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Coinbase_Portfolio_Tracker.Models.Coinbase.Dto;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
+using Coinbase_Portfolio_Tracker.Shared;
 using Microsoft.Extensions.Hosting;
 
 namespace Coinbase_Portfolio_Tracker
@@ -26,13 +27,7 @@ namespace Coinbase_Portfolio_Tracker
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var myCoinbasePerformance = new Dictionary<string, dynamic>()
-            {
-                {"current_value", 0},
-                {"current_unrealized_gain", 0},
-                {"current_performance", 0},
-                {"currencies", new Dictionary<string, dynamic>()}
-            };
+            var myCoinbasePerformance = new CoinbasePerformance();
 
             // ** Coinbase Api Steps **
             // Create service client to connect to coinbase
@@ -41,7 +36,7 @@ namespace Coinbase_Portfolio_Tracker
 
             foreach (var account in accounts)
             {
-                if (account.AccountCurrency == "USD" || account.BalanceAmount == 0)
+                if (account.AccountCurrency == Constants.USCurrencyCode || account.BalanceAmount == 0)
                 {
                     // Do nothing
                 }
@@ -49,49 +44,65 @@ namespace Coinbase_Portfolio_Tracker
                 else
                 {
                     var currentSpotPrice = await _coinbaseSpotPriceService
-                        .GetSpotPriceAsync(account.AccountCurrency + "-USD");
+                        .GetSpotPriceAsync(account.AccountCurrency + $"-{Constants.USCurrencyCode}");
 
-                    var currencyDict = new Dictionary<string, dynamic>()
+                    var currencyDict = new CoinbaseCurrency
                     {
-                        {"symbol", account.AccountCurrency},
-                        {"quantity", account.BalanceAmount},
-                        {"current_price", currentSpotPrice},
-                        {"current_total", account.BalanceAmount},
-                        {"average_price", 0},
-                        {"original_worth", 0},
-                        {"sell_original_worth", 0},
-                        {"realized_gain_loss", 0},
-                        {"unrealized_gain_loss", 0},
-                        {"current_performance", 0},
-                        {"realized_gain_performance", 0},
-                        {"all_time_invested", 0},
-                        {"all_time_costs", 0},
-                        {"all_time_fees", 0},
-                        {"orders", new List<string>()}
+                        Symbol = account.AccountCurrency,
+                        Quantity = account.BalanceAmount,
+                        CurrentPrice = currentSpotPrice,
+                        CurrentTotal = account.BalanceAmount
                     };
 
-                    myCoinbasePerformance["currencies"] = currencyDict;
-                }
+                    myCoinbasePerformance.Currencies.Add(currencyDict);
 
-                // Get transactions
-                var transactions = await _coinbaseTransactionService.GetAllTransactionsAsync(account.Id);
+                        // Get transactions
+                    var transactions = await _coinbaseTransactionService.GetAllTransactionsAsync(account.Id);
 
-                foreach (var transaction in transactions)
-                {
-                    switch (transaction.Type)
+                    foreach (var transaction in transactions)
                     {
-                        case "buy":
+                        switch (transaction.Type)
                         {
-                            var symbol = transaction.TransactionAmountCurrency;
-                            var amount = transaction.TransactionAmount;
-                            var datetime = transaction.TransactionCreatedDate;
-                    
-                            // buy price and fee
-                            var buy = await _coinbaseBuyService.GetBuy(account.Id, transaction.Buy.Id);
-                            break;
+                            case "buy":
+                            {
+                                var buyAmount = transaction.TransactionAmount;
+                                
+                                // buy price and fee
+                                var buy = await _coinbaseBuyService.GetBuy(account.Id, transaction.Buy.Id);
+                                var buyCost = buy.TotalAmount;
+                                var buySubtotal = buy.SubtotalAmount;
+                                var totalFee = buy.FeeAmount;
+
+                                var buyOrder = new BuyOrder()
+                                {
+                                    Type = "buy",
+                                    Datetime = transaction.TransactionCreatedDate,
+                                    Symbol = transaction.TransactionAmountCurrency,
+                                    Amount = buyAmount,
+                                    Cost = buyCost,
+                                    Invested = buySubtotal,
+                                    SpotPrice = buySubtotal / buyAmount,
+                                    TotalFee = totalFee
+                                };
+
+                                currencyDict.AllTimeInvested += buySubtotal;
+                                currencyDict.AllTimeCosts += buyCost;
+                                currencyDict.AllTimeFees += totalFee;
+                                
+                                currencyDict.Orders.Add(buyOrder);
+                                break;
+                            }
+                            case "sell":
+                            {
+                                var sellAmount = transaction.TransactionAmount;
+                                
+                                // sell price and fee
+                                
+                                
+                                
+                                break;
+                            }
                         }
-                        case "sell":
-                            break;
                     }
                 }
             }
