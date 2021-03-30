@@ -8,7 +8,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
 {
     public interface ICoinbaseBuyService
     {
-        Task<CoinbaseBuy> GetBuy(string accountId, string buyId);
+        Task<CoinbaseBuy> GetBuyAsync(string accountId, string buyId);
     }
 
     public class CoinbaseBuyService : RequestService, ICoinbaseBuyService
@@ -18,7 +18,7 @@ namespace Coinbase_Portfolio_Tracker.Services.Coinbase
         {
             
         }
-        public async Task<CoinbaseBuy> GetBuy(string accountId, string buyId)
+        public async Task<CoinbaseBuy> GetBuyAsync(string accountId, string buyId)
         {
             if (string.IsNullOrWhiteSpace(accountId) || string.IsNullOrWhiteSpace(buyId))
                 throw new ArgumentNullException($"AccountId or BuyId cannot be null, {accountId}, {buyId}");

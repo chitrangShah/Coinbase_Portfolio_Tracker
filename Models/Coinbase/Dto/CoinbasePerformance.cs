@@ -8,7 +8,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         public decimal CurrentValue { get; set; }
         public decimal CurrentUnrealizedGain { get; set; }
         public decimal CurrentPerformance { get; set; }
-        public IList<CoinbaseCurrency> Currencies { get; set; }
+        public List<CoinbaseCurrency> Currencies { get; set; }
     }
 
     public class CoinbaseCurrency
@@ -27,7 +27,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         public decimal AllTimeInvested { get; set; }
         public decimal AllTimeFees { get; set; }
         public decimal AllTimeCosts { get; set; }
-        public IList<ICoinbaseOrder> Orders { get; set; }
+        public List<ICoinbaseOrder> Orders { get; set; }
     }
 
     public interface ICoinbaseOrder
