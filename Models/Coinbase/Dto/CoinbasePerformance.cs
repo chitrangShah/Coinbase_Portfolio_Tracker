@@ -36,6 +36,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         DateTimeOffset? Datetime { get; set; }
         string Symbol { get; set; }
         decimal Amount { get; set; }
+        decimal OriginalWorth { get; set; }
     }
 
     public class BuyOrder : ICoinbaseOrder
@@ -44,6 +45,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         public DateTimeOffset? Datetime { get; set; }
         public string Symbol { get; set; }
         public decimal Amount { get; set; }
+        public decimal OriginalWorth { get; set; }
         public decimal Cost { get; set; }
         public decimal Invested { get; set; }
         public decimal SpotPrice { get; set; }
@@ -56,6 +58,7 @@ namespace Coinbase_Portfolio_Tracker.Models.Coinbase.Dto
         public DateTimeOffset? Datetime { get; set; }
         public string Symbol { get; set; }
         public decimal Amount { get; set; }
+        public decimal OriginalWorth { get; set; }
         public decimal Earned { get; set; }
         public decimal SellTotal { get; set; }
         public decimal SpotPrice { get; set; }

@@ -49,6 +49,7 @@ namespace Coinbase_Portfolio_Tracker
                 {
                     services
                         .AddHostedService<App>()
+                        .AddTransient<ICoinbasePerformanceService, CoinbasePerformanceService>()
                         .AddTransient<ICoinbaseAuthenticator, CoinbaseAuthenticator>()
                         .AddTransient<ICoinbaseConnectService, CoinbaseConnectService>()
                         .AddTransient<ICoinbaseAccountService, CoinbaseAccountService>()
