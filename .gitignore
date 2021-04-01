@@ -7,7 +7,7 @@ riderModule.iml
 # ignore appsettings configuration files
 /appsettings.Development.json
 /appsettings.Production.json
-/google-spreadsheet-credentials.json
+/google-sheets-settings.json
 
 #ignore IDE files
 .idea/*
