@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Coinbase_Portfolio_Tracker.Infrastructure;
 using Coinbase_Portfolio_Tracker.Models.Config;
 using Coinbase_Portfolio_Tracker.Services.Coinbase;
+using Coinbase_Portfolio_Tracker.Services.Google;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -56,7 +57,8 @@ namespace Coinbase_Portfolio_Tracker
                         .AddTransient<ICoinbaseSpotPriceService, CoinbaseSpotPriceService>()
                         .AddTransient<ICoinbaseTransactionService, CoinbaseTransactionService>()
                         .AddTransient<ICoinbaseBuyService, CoinbaseBuyService>()
-                        .AddTransient<ICoinbaseSellService, CoinbaseSellService>();
+                        .AddTransient<ICoinbaseSellService, CoinbaseSellService>()
+                        .AddTransient<IGoogleSpreadsheetService, GoogleSpreadsheetService>();
                         
 
                     services.AddOptions<CoinbaseOptions>()
